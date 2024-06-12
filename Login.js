@@ -5,7 +5,6 @@ export class Login{
     async LoginSSW(driver){
         try{
             //sessao.LoginSSW()
-            console.log('Login')
 
             //Dados de Login
             let dominio = await driver.findElement(By.name('f1'))

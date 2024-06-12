@@ -4,7 +4,6 @@ export class ConfiguraRel{
 
     async GeraRel(driver){
         //Configura geração de relatorio
-        console.log('Configura Geração do Relatorio')
         let mesanterior = new Date()
         mesanterior.setDate(new Date().getDate() - 31)
 
