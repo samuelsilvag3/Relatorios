@@ -42,8 +42,9 @@ export class Fila {
                 await driver.sleep(5000)
             }
         }
-        finally{
-            console.log('Finally4')
+        catch(err){
+            console.log('Erro')
+            console.log(err)
         }
     }
 }

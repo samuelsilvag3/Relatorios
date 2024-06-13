@@ -1,14 +1,21 @@
-import {Builder, Browser, By, Key, until, WebElement} from "selenium-webdriver"
-import fs from 'fs'
+import {Builder, Browser, By, until} from 'selenium-webdriver'
 import Login from './Login.js'
 import ConfiguraRel from './ConfiguraRel.js'
 import Fila from './FIla.js'
+import Coletas from './Coletas.js'
+import Arquivos from './Arquivos.js'
+import chrome from 'selenium-webdriver/chrome.js'
 
 async function relatorios(){
-    let driver = await new Builder().forBrowser(Browser.CHROME).build()
     let login = new Login()
     let config = new ConfiguraRel()
     let FilaRel = new Fila()
+    let coletas = new Coletas()
+    let filehandler = new Arquivos()
+    let prefs = {"download.default_directory": "C:\\Relatorios\\Downloads"}
+    let opts = new chrome.Options()
+    opts.setUserPreferences(prefs)
+    let driver = await new Builder().forBrowser(Browser.CHROME).setChromeOptions(opts).build()
     
     try{
       //Realiza Login no SSW
@@ -39,16 +46,38 @@ async function relatorios(){
       await driver.switchTo().window(JanelaInicial)
       await driver.wait(until.titleIs('Menu Principal :: SSW Sistema de Transportes'), 30000)
       opcao.sendKeys('156')
-      
       await driver.wait(async () => (await driver.getAllWindowHandles()).length === 3, 2000)
+
+      //Muda foco para janela da fila de espera
       janelas = await driver.getAllWindowHandles()
       janelas.forEach(async handle => {
         if((handle !== JanelaInicial) && (handle !== jan455)){
           await driver.switchTo().window(handle)
         }
       })
+
       await driver.wait(until.titleIs('156 - Fila de processamento em lotes :: SSW Sistema de Transportes'), 30000)
+      let jan156 = await driver.getWindowHandle()
       await FilaRel.FilaProcessamento(driver)
+
+
+      await filehandler.copiaarquivos('c:/Relatorios/Downloads', 'c:/Relatorios/Destino')
+
+      //Retorna ao menu principal
+      await driver.switchTo().window(JanelaInicial)
+      await driver.wait(until.titleIs('Menu Principal :: SSW Sistema de Transportes'), 30000)
+
+      //Acessa Situação das coletas
+      opcao.sendKeys('103')
+      await driver.wait(async () => (await driver.getAllWindowHandles()).length === 4, 2000)
+      janelas = await driver.getAllWindowHandles()
+      janelas.forEach(async handle => {
+        if((handle !== JanelaInicial) && (handle !== jan455) && (handle !== jan156)){
+          await driver.switchTo().window(handle)
+        }
+      })
+      await coletas.GeraColetas(driver)
+      await driver.manage().setTimeouts({implicit: 30000})
     }
     catch(err){
         console.log('erro')

@@ -21,15 +21,11 @@ export class Login{
             await driver.manage().setTimeouts({implicit: 30000})
             BtnLogin.click()
             await driver.manage().setTimeouts({implicit: 30000})
-            await driver.sleep(5000)
+            await driver.sleep(2000)
         }
         catch(err){
             console.log('erro2')
             console.log(err)
-        }
-        finally {
-            //await driver.quit()
-            console.log('FIM2')
         }
     }
 }

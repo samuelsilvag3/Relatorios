@@ -39,8 +39,9 @@ export class ConfiguraRel{
             continua.click()
             await driver.manage().setTimeouts({implicit: 30000})
             
-        }finally{
-            console.log('Fim3')
+        }catch(err){
+            console.log('Erro')
+            console.log(err)
         }
     }
 }
