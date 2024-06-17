@@ -13,8 +13,8 @@ async function relatorios(){
     let coletas = new Coletas()
     let filehandler = new Arquivos()
 
-    let prefs = {"download.default_directory": "z:\\Mural"}
-    let diretorio = 'z:/Mural'
+    let prefs = {"download.default_directory": "Y:\\Mural"}
+    let diretorio = 'Y:/Mural'
     let nomeentregas = 'entregas.csv'
     let nomecoletas = 'coletas.csv'
 
@@ -24,7 +24,7 @@ async function relatorios(){
     
     try{
       //Apaga arquivos gerados anteriormente
-      await filehandler.limpadiretorio('z:/Mural')
+      await filehandler.limpadiretorio('Y:/Mural')
 
       //Realiza Login no SSW
       await driver.get('https://sistema.ssw.inf.br/bin/ssw0422')

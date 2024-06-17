@@ -32,7 +32,7 @@ export class Fila {
                         if(status==='Baixar'){
                         //Realiza Download do Relatorio
                         await driver.findElement(By.xpath(`//*[@id="tblsr"]/tbody/tr[${linha}]/td[9]/div/a/u`)).click()
-                        await driver.manage().setTimeouts({implicit: 30000})
+                        await driver.sleep(3000)
                         }
                     }
                 }
