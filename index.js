@@ -12,12 +12,20 @@ async function relatorios(){
     let FilaRel = new Fila()
     let coletas = new Coletas()
     let filehandler = new Arquivos()
-    let prefs = {"download.default_directory": "C:\\Relatorios\\Downloads"}
+
+    let prefs = {"download.default_directory": "z:\\Mural"}
+    let diretorio = 'z:/Mural'
+    let nomeentregas = 'entregas.csv'
+    let nomecoletas = 'coletas.csv'
+
     let opts = new chrome.Options()
     opts.setUserPreferences(prefs)
     let driver = await new Builder().forBrowser(Browser.CHROME).setChromeOptions(opts).build()
     
     try{
+      //Apaga arquivos gerados anteriormente
+      await filehandler.limpadiretorio('z:/Mural')
+
       //Realiza Login no SSW
       await driver.get('https://sistema.ssw.inf.br/bin/ssw0422')
       const JanelaInicial = await driver.getWindowHandle()
@@ -60,8 +68,7 @@ async function relatorios(){
       let jan156 = await driver.getWindowHandle()
       await FilaRel.FilaProcessamento(driver)
 
-
-      await filehandler.copiaarquivos('c:/Relatorios/Downloads', 'c:/Relatorios/Destino')
+      filehandler.renomeiaarquivos(diretorio, nomeentregas)
 
       //Retorna ao menu principal
       await driver.switchTo().window(JanelaInicial)
@@ -77,7 +84,9 @@ async function relatorios(){
         }
       })
       await coletas.GeraColetas(driver)
-      await driver.manage().setTimeouts({implicit: 30000})
+      await driver.sleep(7000)
+      filehandler.renomeiaarquivos(diretorio, nomecoletas)
+      await driver.sleep(5000)
     }
     catch(err){
         console.log('erro')

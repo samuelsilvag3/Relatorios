@@ -14,7 +14,7 @@ export class Fila {
                 let Sequencia = await fila[linha].findElement(By.xpath(XpSequencia)).getText()
                 let Relatorio = (await fila[linha].findElement(By.xpath(XpRelatorio)).getText()).slice(0, 3)
                 let usuario = await fila[linha].findElement(By.xpath(XpUsuario)).getText()
-                if(Relatorio === '455' && usuario === 'dsparcei'){
+                if(Relatorio === '455' && usuario === 'powerbi'){
                     numRel.push(Sequencia)
                 }
             }
@@ -39,7 +39,7 @@ export class Fila {
                 let atualizar = await driver.findElement(By.xpath('//*[@id="2"]'))
                 await driver.manage().setTimeouts({implicit: 30000})
                 atualizar.click()
-                await driver.sleep(5000)
+                await driver.sleep(7000)
             }
         }
         catch(err){

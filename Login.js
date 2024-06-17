@@ -15,7 +15,7 @@ export class Login{
 
             dominio.sendKeys('ALL')
             cpf.sendKeys('33779439867')
-            usuario.sendKeys('dsparcei')
+            usuario.sendKeys('powerbi')
             senha.sendKeys('123')
 
             await driver.manage().setTimeouts({implicit: 30000})
