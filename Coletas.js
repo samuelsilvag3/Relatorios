@@ -19,8 +19,8 @@ export class Coletas{
             mostrar.sendKeys('E')
             await driver.manage().setTimeouts({implicit: 30000})
             btngerar.click()
-            await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 2000)
-            await driver.wait(until.elementIsNotVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 2000)
+            await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 30000)
+            await driver.wait(until.elementIsNotVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 30000)
         }
         catch(err){
             console.log('Erro')
