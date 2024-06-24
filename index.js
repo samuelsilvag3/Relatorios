@@ -30,11 +30,12 @@ async function relatorios(){
       await driver.get('https://sistema.ssw.inf.br/bin/ssw0422')
       const JanelaInicial = await driver.getWindowHandle()
       await login.LoginSSW(driver)
+      await driver.wait(until.titleIs('Menu Principal :: SSW Sistema de Transportes'), 30000)
 
       //Acessar gerador de relatorios de CTE emitidos
       let opcao = await driver.findElement(By.xpath('//*[@id="3"]'))
       opcao.sendKeys('455')
-      await driver.wait(async () => (await driver.getAllWindowHandles()).length === 2, 2000)
+      await driver.wait(async () => (await driver.getAllWindowHandles()).length === 2, 30000)
 
       //Laço 02 meses
       //Troca para nova janela aberta
@@ -46,7 +47,7 @@ async function relatorios(){
       })
 
       //Configura Filtros do Relatorio
-      await driver.wait(until.titleIs('455 - Fretes Expedidos/Recebidos - CTRCs :: SSW Sistema de Transportes'), 30000);
+      await driver.wait(until.titleIs('455 - Fretes Expedidos/Recebidos - CTRCs :: SSW Sistema de Transportes'), 30000)
       let jan455 = await driver.getWindowHandle()
       await config.GeraRel(driver)
 
@@ -76,13 +77,14 @@ async function relatorios(){
 
       //Acessa Situação das coletas
       opcao.sendKeys('103')
-      await driver.wait(async () => (await driver.getAllWindowHandles()).length === 4, 2000)
+      await driver.wait(async () => (await driver.getAllWindowHandles()).length === 4, 30000)
       janelas = await driver.getAllWindowHandles()
       janelas.forEach(async handle => {
         if((handle !== JanelaInicial) && (handle !== jan455) && (handle !== jan156)){
           await driver.switchTo().window(handle)
         }
       })
+      await driver.wait(until.titleIs('103 - Situação de Coletas :: SSW Sistema de Transportes'), 30000)
       await coletas.GeraColetas(driver)
       await driver.sleep(7000)
       filehandler.renomeiaarquivos(diretorio, nomecoletas)

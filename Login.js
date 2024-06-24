@@ -12,16 +12,13 @@ export class Login{
             let usuario = await driver.findElement(By.name('f3'))
             let senha = await driver.findElement(By.name('f4'))
             let BtnLogin = await driver.findElement(By.id('5'))
-
+            await driver.manage().setTimeouts({implicit: 30000})
             dominio.sendKeys('ALL')
             cpf.sendKeys('33779439867')
             usuario.sendKeys('powerbi')
             senha.sendKeys('123')
-
-            await driver.manage().setTimeouts({implicit: 30000})
-            BtnLogin.click()
-            await driver.manage().setTimeouts({implicit: 30000})
             await driver.sleep(2000)
+            BtnLogin.click()
         }
         catch(err){
             console.log('erro2')

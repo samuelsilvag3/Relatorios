@@ -1,4 +1,4 @@
-import {By} from 'selenium-webdriver'
+import {By, until} from 'selenium-webdriver'
 
 export class Fila {
     async FilaProcessamento(driver){
@@ -32,7 +32,8 @@ export class Fila {
                         if(status==='Baixar'){
                         //Realiza Download do Relatorio
                         await driver.findElement(By.xpath(`//*[@id="tblsr"]/tbody/tr[${linha}]/td[9]/div/a/u`)).click()
-                        await driver.sleep(3000)
+                        await driver.wait(until.elementIsVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 30000)
+                        await driver.wait(until.elementIsNotVisible(await driver.findElement(By.xpath('//*[@id="procimg"]'))), 30000)
                         }
                     }
                 }
